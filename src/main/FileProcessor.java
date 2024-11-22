@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import main.model.Cookie;
 
 public class FileProcessor {
-    HashMap<String,Integer> cookieMap = new HashMap<>();
-
+    
     public List<Cookie> getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
         List<Cookie> cookies = new ArrayList<>();
         
@@ -43,7 +43,9 @@ public class FileProcessor {
         return cookies;
     }
 
-    public void activeForDate(String date, List<Cookie> cookies) {
+    public Map<String,Integer> activeForDate(String date, List<Cookie> cookies) {
+        Map<String,Integer> cookieMap = new HashMap<>();
+
         if (cookies == null || cookies.isEmpty()) {
             throw new IllegalArgumentException("Cookie list cannot be null or empty");
         }
@@ -58,5 +60,6 @@ public class FileProcessor {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid date format. Expected format: YYYY-MM-DD", e);
         }
+        return cookieMap;
     }
 }
