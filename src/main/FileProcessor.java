@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
 import main.model.Cookie;
 
 public class FileProcessor {
+    private Map<String,Integer> cookieMap = new HashMap<>();
     
     public List<Cookie> getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
         List<Cookie> cookies = new ArrayList<>();
@@ -43,8 +45,7 @@ public class FileProcessor {
         return cookies;
     }
 
-    public Map<String,Integer> activeForDate(String date, List<Cookie> cookies) {
-        Map<String,Integer> cookieMap = new HashMap<>();
+    public void activeForDate(String date, List<Cookie> cookies) {
 
         if (cookies == null || cookies.isEmpty()) {
             throw new IllegalArgumentException("Cookie list cannot be null or empty");
@@ -60,6 +61,24 @@ public class FileProcessor {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid date format. Expected format: YYYY-MM-DD", e);
         }
-        return cookieMap;
+    }
+
+    public void getMostActive() {
+        if (cookieMap.isEmpty()) {
+            System.out.println("No cookie data available");
+            return;
+        }
+        int maxCount = Collections.max(cookieMap.values());
+
+        if (maxCount == 0) {
+            System.out.println("No active cookies for the given date");
+            return;
+        }
+        
+        for (Map.Entry<String, Integer> entry : cookieMap.entrySet()) {
+            if (entry.getValue() == maxCount) {
+                System.out.println(entry.getKey());
+            }
+        }
     }
 }

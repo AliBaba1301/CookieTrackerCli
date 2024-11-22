@@ -14,11 +14,11 @@ public class CookieTrackerCliMainApplication {
         FileProcessor fileProcessor = new FileProcessor();
         CommandLine commandLine = commandLineProcessor.parseArgs(args);
         List<Cookie> cookies = new ArrayList<>();
-        Map<String,Integer> cookieMap = new HashMap<>();
 
         if (commandLine != null) {
             cookies = fileProcessor.getCookieDataFromFile(commandLine.getOptionValue("f"));
-            cookieMap = fileProcessor.activeForDate(commandLine.getOptionValue("d"), cookies);
+            fileProcessor.activeForDate(commandLine.getOptionValue("d"), cookies);
+            fileProcessor.getMostActive();
         }
         
     }
