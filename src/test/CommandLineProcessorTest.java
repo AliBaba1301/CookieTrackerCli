@@ -94,4 +94,25 @@ public class CommandLineProcessorTest {
         assertTrue(actualOutput.contains(this.helpOutput));
         assertTrue(actualOutput.contains(expectedOutput));
     }
+
+    @Test
+    public void testParseArgs_ExtraArguments() {
+        String[] args = {"-f", "src/test/resources/validCsv.csv", "-d", "2018-12-09", "-x", "extra"};
+        String expectedErrorMessage = "Unrecognized option: " + args[4];
+        String expectedOutput = "Error parsing command line: " + expectedErrorMessage;
+        processor.parseArgs(args);
+
+        String actualOutput = outputStream.toString();
+        assertTrue(actualOutput.contains(this.helpOutput));
+        assertTrue(actualOutput.contains(expectedOutput));
+    }
+
+    @Test
+    public void testParseArgs_HelpWithOtherArgs() {
+        String[] args = {"-f", "src/test/resources/validCsv.csv", "-d", "2018-12-09", "-h"};
+        processor.parseArgs(args);
+        
+        String output = outputStream.toString();
+        assertTrue(output.contains(this.helpOutput));
+    }
 }
