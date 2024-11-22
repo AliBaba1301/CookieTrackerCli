@@ -29,6 +29,7 @@ The Cookie Tracker CLI Application is a command-line tool designed to process co
    After building, you can run the application using the following command:
    ```bash
    java -cp "cookie-tracker-cli.jar:lib/*" main.CookieTrackerCliMainApplication -f <pathToCSV>  -d <date>
+   eg. java -cp "cookie-tracker-cli.jar:lib/*" main.CookieTrackerCliMainApplication -f src/test/resources/validCsv.csv -d 2018-12-09
    ```
 
 
