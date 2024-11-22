@@ -12,13 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.cli.CommandLine;
+
 import main.model.Cookie;
 
 public class FileProcessor {
     private Map<String,Integer> cookieMap = new HashMap<>();
+    private List<Cookie> cookies = new ArrayList<>();
     
-    public List<Cookie> getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
-        List<Cookie> cookies = new ArrayList<>();
+    private void getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
         
         try (BufferedReader br = new BufferedReader(new FileReader(pathToCsv))) {
             String line;
@@ -41,11 +43,9 @@ public class FileProcessor {
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File " + pathToCsv + " not found");
         }
-        
-        return cookies;
     }
 
-    public void activeForDate(String date, List<Cookie> cookies) {
+    private void activeForDate(String date) {
 
         if (cookies == null || cookies.isEmpty()) {
             throw new IllegalArgumentException("Cookie list cannot be null or empty");
@@ -63,7 +63,7 @@ public class FileProcessor {
         }
     }
 
-    public void getMostActive() {
+    private void getMostActive() {
         if (cookieMap.isEmpty()) {
             System.out.println("No cookie data available");
             return;
@@ -80,5 +80,24 @@ public class FileProcessor {
                 System.out.println(entry.getKey());
             }
         }
+    }
+
+    public void processFile (CommandLine commandLine){
+        try {
+            getCookieDataFromFile(commandLine.getOptionValue("f"));
+            activeForDate(commandLine.getOptionValue("d"));
+            getMostActive();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            return;
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            return;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+
     }
 }
