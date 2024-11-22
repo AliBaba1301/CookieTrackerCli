@@ -12,8 +12,8 @@ public class CommandLineProcessor {
         Options options = new Options();
         CommandLineParser parser = new DefaultParser();
 
-        options.addOption("f", "file", true, "Filename to process");
-        options.addOption("d", "date", true, "Date to specify");
+        options.addOption("f", "file", true, "Path to CSV file containing Cookie access logs");
+        options.addOption("d", "date", true, "Date to get the most active cookie/s for");
         options.addOption("h", "help", false, "Shows the help message in output stream");
         
         try {
@@ -21,25 +21,22 @@ public class CommandLineProcessor {
 
             if (commandLine.hasOption("h")) {
                 displayHelpMessage(options);
-                System.exit(0);
             }
-
-            if (!commandLine.hasOption("f") || !commandLine.hasOption("d")) {
+            else if (!commandLine.hasOption("f") || !commandLine.hasOption("d")) {
                 throw new ParseException("Please provide both a file path (-f) and a date (-d) in YYYY-MM-DD format");
             }
 
             return commandLine;
 
         } catch (ParseException e) {
-            System.out.println("Error parsing command line: " + e.getMessage());
+            System.out.println("Error parsing command line: " + e.getMessage() + "\n");
             displayHelpMessage(options);
-            System.exit(1);
         }
 
         return null;
     }
 
-    private static void displayHelpMessage(Options options) {
+    private void displayHelpMessage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("CommandLineParameters", options);
     }
