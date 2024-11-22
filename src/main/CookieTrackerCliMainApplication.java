@@ -15,6 +15,7 @@ public class CookieTrackerCliMainApplication {
 
         if (commandLine != null) {
             cookies = fileProcessor.getCookieDataFromFile(commandLine.getOptionValue("f"));
+            fileProcessor.activeForDate(commandLine.getOptionValue("d"), cookies);
         }
         
     }

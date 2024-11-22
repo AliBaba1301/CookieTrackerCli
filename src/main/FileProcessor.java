@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,5 +41,22 @@ public class FileProcessor {
         }
         
         return cookies;
+    }
+
+    public void activeForDate(String date, List<Cookie> cookies) {
+        if (cookies == null || cookies.isEmpty()) {
+            throw new IllegalArgumentException("Cookie list cannot be null or empty");
+        }
+        
+        try {
+            LocalDate activeDate = LocalDate.parse(date);
+            for (Cookie cookie : cookies) {
+                if (cookie.getAccessDate().toLocalDate().isEqual(activeDate)) {
+                    cookieMap.put(cookie.getName(), cookieMap.get(cookie.getName()) + 1);
+                }
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format. Expected format: YYYY-MM-DD", e);
+        }
     }
 }
