@@ -32,11 +32,6 @@ public class CommandLineProcessorTest {
         );
     }
 
-    @After
-    public void tearDown() {
-        System.setOut(new PrintStream(outputStream));
-    }
-
     @Test
     public void testParseArgs_ValidArgs() throws ParseException {
         String[] args = {"-f", "src/test/resources/validCsv.csv", "-d", "2018-12-09"};

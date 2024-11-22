@@ -14,13 +14,15 @@ import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
 
+import lombok.Getter;
 import main.model.Cookie;
 
+@Getter
 public class FileProcessor {
     private Map<String,Integer> cookieMap = new HashMap<>();
     private List<Cookie> cookies = new ArrayList<>();
     
-    private void getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
+    public void getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
         
         try (BufferedReader br = new BufferedReader(new FileReader(pathToCsv))) {
             String line;
@@ -45,7 +47,7 @@ public class FileProcessor {
         }
     }
 
-    private void activeForDate(String date) {
+    public void activeForDate(String date) {
 
         if (cookies == null || cookies.isEmpty()) {
             throw new IllegalArgumentException("Cookie list cannot be null or empty");
@@ -63,7 +65,7 @@ public class FileProcessor {
         }
     }
 
-    private void getMostActive() {
+    public void getMostActive() {
         if (cookieMap.isEmpty()) {
             System.out.println("No cookie data available");
             return;
@@ -88,7 +90,7 @@ public class FileProcessor {
             activeForDate(commandLine.getOptionValue("d"));
             getMostActive();
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println(e.getMessage());
             return;
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
