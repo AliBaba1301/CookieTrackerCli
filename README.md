@@ -22,7 +22,7 @@ The Cookie Tracker CLI Application is a command-line tool designed to process co
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/AliBaba1301/CookieTrackerCli
-   cd cookie-tracker-cli
+   cd CookieTrackerCli
    ```
 
 2. **Run the application**:
