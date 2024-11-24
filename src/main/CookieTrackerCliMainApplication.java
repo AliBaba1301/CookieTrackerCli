@@ -7,10 +7,7 @@ public class CookieTrackerCliMainApplication {
         CommandLineProcessor commandLineProcessor = new CommandLineProcessor();
         FileProcessor fileProcessor = new FileProcessor();
         CommandLine commandLine = commandLineProcessor.parseArgs(args);
-
-        if (commandLine != null) {
-            fileProcessor.processFile(commandLine);
-        }
+        fileProcessor.processFile(commandLine);
         
     }
 }

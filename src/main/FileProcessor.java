@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import main.model.Cookie;
 public class FileProcessor {
     private Map<String,Integer> cookieMap = new HashMap<>();
     private List<Cookie> cookies = new ArrayList<>();
+    private final String DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'+'SS:SS";
     
     public void getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
         
@@ -40,7 +42,7 @@ public class FileProcessor {
                 }
                 
                 cookieMap.putIfAbsent(parts[0], 0);
-                cookies.add(new Cookie(parts[0], LocalDateTime.parse(parts[1].substring(0, 19))));
+                cookies.add(new Cookie(parts[0], formatDate(parts[1])));
             }
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("File " + pathToCsv + " not found");
@@ -85,21 +87,25 @@ public class FileProcessor {
     }
 
     public void processFile (CommandLine commandLine){
+        
+        if (commandLine == null) {
+            return;
+        }
+
         try {
             getCookieDataFromFile(commandLine.getOptionValue("f"));
             activeForDate(commandLine.getOptionValue("d"));
             getMostActive();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-            return;
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
-            return;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-            return;
         }
-
-
     }
+
+    private LocalDateTime formatDate(String date){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_PATTERN);
+        return LocalDateTime.parse(date,dateTimeFormatter);
+    }
+
 }

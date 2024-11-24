@@ -147,7 +147,7 @@ public class FileProcessorTest {
     @Test
     public void testProcessFile__FileNotFound() throws Exception {
         String pathToCsv = "doesNotExist.csv";
-        String expectedString = "File " + pathToCsv + " not found\n";
+        String expectedString = "Error reading file: File " + pathToCsv + " not found\n";
         String[] args = {"-f",pathToCsv, "-d", "2018-12-09"};
         CommandLine commandLine = createCommandLine(args);
         
