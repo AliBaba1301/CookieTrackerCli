@@ -12,9 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.cli.CommandLine;
-
 import lombok.Getter;
 import main.model.Cookie;
 
@@ -25,7 +23,6 @@ public class FileProcessor {
     private final String DATE_TIME_FORMAT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'+'SS:SS";
     
     public void getCookieDataFromFile(String pathToCsv) throws FileNotFoundException, IOException {
-        
         try (BufferedReader br = new BufferedReader(new FileReader(pathToCsv))) {
             String line;
             boolean isFirstLine = true;
@@ -50,7 +47,6 @@ public class FileProcessor {
     }
 
     public void activeForDate(String date) {
-
         if (cookies == null || cookies.isEmpty()) {
             throw new IllegalArgumentException("Cookie list cannot be null or empty");
         }
@@ -87,10 +83,7 @@ public class FileProcessor {
     }
 
     public void processFile (CommandLine commandLine){
-        
-        if (commandLine == null) {
-            return;
-        }
+        if (commandLine == null) return;
 
         try {
             getCookieDataFromFile(commandLine.getOptionValue("f"));
