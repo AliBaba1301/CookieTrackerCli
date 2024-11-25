@@ -13,7 +13,7 @@ The Cookie Tracker CLI Application is a command-line tool designed to process co
 
 ## Technologies Used
 
-- Java
+- Java 21
 - Apache Commons CLI
 - Lombok
 
